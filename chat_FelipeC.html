@@ -1,0 +1,159 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<html>
+<style>
+    /* Style the body */
+    body {
+        font-family: Arial;
+        margin: 0;
+    }
+
+    .container{
+        width: 40%;
+        margin:auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 99.5%;
+        background-color: #fdfdfd;
+    }
+    /* Header/Logo Title */
+    .header {
+        padding: 1px;
+        text-align: left;
+        background: #1abc9c;
+        color: white;
+        font-size: 14px;
+    }
+    .title{
+        padding-left:15px;
+    }
+
+    .content{
+        width: 89%;
+        border:1px solid #ccc;
+        border-radius: 2px;
+        margin: auto;
+        margin-top: 5px;
+        height: 76%;
+        background-color: white;
+        padding:20px;
+        overflow: auto;
+    }
+
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 3px;
+        color: white;
+        padding: 5px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 4px 2px;
+        height: 30px;
+    }
+
+    .mensagem{
+        width: 77%; 
+        height: 30px;
+        margin: 10px 0px 0px 10px;
+    }
+
+    .chat-atend{
+        position: relative;
+        margin: 10px;
+    }
+
+    .chat-voce{
+        position: relative;
+        bottom: 0;
+        clear:both; 
+        overflow:auto;
+        margin: 10px;
+        
+    }
+    .chat-msg{
+        width: fit-content;
+        max-width: 90% !important;
+        border: 1px solid green;
+        border-radius: 3px;
+        padding:5px;
+        white-space: pre-wrap;  
+        white-space: -moz-pre-wrap; /* Firefox */    
+        white-space: -pre-wrap;     /* Opera <7 */   
+        white-space: -o-pre-wrap;   /* Opera 7 */    
+        word-wrap: break-word;      /* IE */
+    }
+    .chat-msg, .lbl {
+        display:block;
+    }
+    .chat-voce .chat-msg, .chat-voce .lbl {
+        margin-left: auto; 
+        margin-right: 0;
+    }
+    .chat-voce .lbl {
+        margin-left: auto; 
+        margin-right: 0;
+        text-align:end;
+    }
+    .lbl{
+        font-size: 13px;
+    }
+</style>
+<head>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3 class="title">Atendimento on-line</h3>
+        </div>
+        <div id="chat-wrapper" class="content">
+            <div id="chat" class="inner-content">
+                <div class="chat-atend">
+                    <div class="lbl">Atendente diz:</div>
+                    <div class="chat-msg" id="message1">Blabla blabla blabla</div>
+                </div>
+
+                <div class="chat-atend">
+                    <div class="lbl">Atendente diz:</div>
+                    <div class="chat-msg" id="message2">Blabla blabla blabla</div>
+                </div>
+
+                <div class="chat-voce">
+                    <div class="lbl">Você diz:</div>
+                    <div class="chat-msg" id="message3">Blabla blabla blabla</div>
+                </div>
+
+                <div class="chat-voce">
+                    <div class="lbl">Você diz:</div>
+                    <div class="chat-msg" id="message4">Blabla blabla blabla</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <input id="msginput" class="mensagem" placeholder="Digite sua mensagem...">
+            <button id="enviabtn" class="button">Enviar</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById("enviabtn").addEventListener("click", function() {
+        let chat   = document.getElementById("chat");
+        let lastid = document.getElementsByClassName("chat-voce");
+        let newid  = ((lastid.length>0) ? (parseInt(lastid[(lastid.length-1)].children[1].id.replace("message","")) + 1) : 1);
+        let text   = document.getElementById("msginput").value;
+        if(text!=""){
+            let newmsg = '<div class="chat-voce">' +
+                        '<div class="lbl">Você diz:</div>' +
+                        '<div class="chat-msg" id="message' + newid + '">' + text + '</div>' +
+                        '</div>';
+            document.getElementById("msginput").value = "";
+            $(chat).append(newmsg);
+
+            document.getElementById("chat-wrapper").scrollTop =  document.getElementById("chat-wrapper").scrollHeight;
+        }
+
+    });
+</script>
